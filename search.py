@@ -1,9 +1,9 @@
 import os
 import re
-filename=""
-read_data=2**24     #Amount of data to be read in each loop
-searchtext="text_to_search" 
-he=searchtext.encode('hex')   #Converting data to hex
+filename="filename.dmp"
+read_data=2**24
+searchtext="bd:mongo:"
+he=searchtext.encode('hex')
 with open(filename, 'rb') as f:
 	while True:
 		data= f.read(read_data)
@@ -11,5 +11,10 @@ with open(filename, 'rb') as f:
 			break
 		elif searchtext in data:
 			print "Found"
+			try:
+				offset=hex(data.index(searchtext))
+				print offset
+			except ValueError:
+				print 'Not Found'						
 		else:
 			continue
